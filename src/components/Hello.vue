@@ -3,7 +3,8 @@
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
 
-<button @click="myClick">Add module</button>
+    <button @click="myClick">Add module</button>
+    <button @click="removeAll">Remove all</button>
 
     <p>My test : {{myTest}} </p>
 
@@ -42,6 +43,9 @@ export default {
   methods:{
     myClick(){
       this.$store.dispatch("addModule",{payload:"plein de trucs"});
+    },
+    removeAll(){
+      this.$store.dispatch("removeAllModule",{payload:"plein de trucs"});
     }
   }
 }

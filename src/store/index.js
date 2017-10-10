@@ -5,8 +5,8 @@ import tartare from './modules/tartare';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-    state: {
-      count: 0
+    state(){
+      return { count: 0 }
     },
     getters : {
       nbModules( state ){ return Object.keys(state.modules).length },
@@ -21,6 +21,12 @@ const store = new Vuex.Store({
           }
         })
       },
+      removeAllModule( { state } ){
+        for( let moduleName in state.modules )
+        {
+          store.unregisterModule( ["modules" , moduleName]);
+        }
+      }
     },
     mutations: {
       increment (state) {
