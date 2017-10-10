@@ -2,6 +2,9 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
+
+<button @click="myClick">Add module</button>
+
     <p>My test : {{myTest}} </p>
 
     <p v-for="(m,idx) in $store.state.modules" :key="idx">
@@ -35,6 +38,11 @@ export default {
   },
   computed : {
     myTest(){ return this.$store.state ; }
+  },
+  methods:{
+    myClick(){
+      this.$store.dispatch("addModule",{payload:"plein de trucs"});
+    }
   }
 }
 </script>

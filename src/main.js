@@ -5,17 +5,6 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-for( let i = 0 ; i < 10 ; i++ ){
-  store.registerModule( ["modules",i] , {
-    namespaced : true,
-    state : { tata : "pipi" },
-    getters : {
-      count: ( { tata } )=> tata
-    }
-  })
-}
-
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
