@@ -4,39 +4,79 @@ import tartare from './modules/tartare';
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
-    state(){
-      return { count: 0 }
-    },
-    getters : {
-      nbModules( state ){ return Object.keys(state.modules).length },
-    },
-    actions : {
-      addModule( { getters } ){
-        store.registerModule( ["modules", getters.nbModules + 1 ] , {
-          namespaced : true,
-          state : { tata : "pipi" },
-          getters : {
-            count: ( { tata } )=> tata
-          }
-        })
-      },
-      removeAllModule( { state } ){
-        for( let moduleName in state.modules )
-        {
-          store.unregisterModule( ["modules" , moduleName]);
-        }
-      }
-    },
-    mutations: {
-      increment (state) {
-        state.count++
-      },
-    },
-    modules : {
-        tartare,
-        modules : {}
+const raclette = {
+  state() {
+    return {
+      lardons: 5
     }
-  });
+  },
+  namespaced: true
+}
 
-  export default store ;
+const fondue = {
+  state() {
+    return {
+      fromages: 8
+    }
+  },
+  namespaced: true
+}
+
+const param = {
+  state() {
+    return {
+      index: 0
+    }
+  },
+  modules: {
+    tartare,
+    raclette,
+    fondue
+  },
+  namespaced: true,
+}
+
+const store = new Vuex.Store({
+  state() {
+    return { count: 0 }
+  },
+  getters: {
+    nbParams(state) {
+      return Object.keys(state.params).length
+    },
+    params(state) {
+      return (idx) => state.params[idx];
+    },
+  },
+  actions: {
+    addModule(context) {
+
+      //tartare.commit('change', "Gaston");
+      context.commit('tartare/change', 'Gaston ' + new Date().getTime());
+
+      let p = param;
+
+      store.registerModule(
+        ["params", this.getters.nbParams],
+        p)
+    },
+    removeAllModule({ state }) {
+      for (let moduleName in state.params) {
+        store.unregisterModule(["params", moduleName]);
+      }
+    }
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    },
+  },
+  modules: {
+    tartare,
+    params: {
+      namespaced: true,
+    },
+  }
+});
+
+export default store;

@@ -1,6 +1,13 @@
 export default {
-  state: {
-    toto: "tata"
+  state() {
+    return {
+      toto: "tata"
+    }
   },
-  namespaced: true
+  namespaced: true,
+  mutations: {
+    change(state, name) {
+      state.toto = name;
+    }
+  }
 };
