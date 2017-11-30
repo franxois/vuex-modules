@@ -38,14 +38,19 @@ const param = {
 
 const store = new Vuex.Store({
   state() {
-    return { count: 0 }
+    return {
+      count: 0
+    }
   },
   getters: {
     nbParams(state) {
-      return Object.keys(state.params).length
+
+      console.log(store);
+
+      return Object.keys(state.config.params).length
     },
     params(state) {
-      return (idx) => state.params[idx];
+      return (idx) => state.config[idx];
     },
   },
   actions: {
@@ -56,13 +61,13 @@ const store = new Vuex.Store({
 
       let p = param;
 
-      store.registerModule(
-        ["params", this.getters.nbParams],
-        p)
+      store.registerModule(["config", "params", this.getters.nbParams], p)
     },
-    removeAllModule({ state }) {
+    removeAllModule({
+      state
+    }) {
       for (let moduleName in state.params) {
-        store.unregisterModule(["params", moduleName]);
+        store.unregisterModule(["config", "params", moduleName]);
       }
     }
   },
@@ -72,10 +77,29 @@ const store = new Vuex.Store({
     },
   },
   modules: {
-    tartare,
-    params: {
-      namespaced: true,
+    voiture: {
+
     },
+    config: {
+      modules: {
+        params: {
+          state() {
+            return {
+              version: 1
+            }
+          },
+          namespaced: true,
+        },
+        tartiflette: {
+          state() {
+            return {
+              fromages: 42
+            }
+          },
+          namespaced: true
+        },
+      },
+    }
   }
 });
 
