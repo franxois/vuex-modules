@@ -44,9 +44,6 @@ const store = new Vuex.Store({
   },
   getters: {
     nbParams(state) {
-
-      console.log(store);
-
       return Object.keys(state.config.params).length
     },
     params(state) {
@@ -55,18 +52,13 @@ const store = new Vuex.Store({
   },
   actions: {
     addModule(context) {
-
-      //tartare.commit('change', "Gaston");
-      context.commit('tartare/change', 'Gaston ' + new Date().getTime());
-
       let p = param;
-
       store.registerModule(["config", "params", this.getters.nbParams], p)
     },
     removeAllModule({
       state
     }) {
-      for (let moduleName in state.params) {
+      for (let moduleName in state.config.params) {
         store.unregisterModule(["config", "params", moduleName]);
       }
     }
@@ -83,11 +75,6 @@ const store = new Vuex.Store({
     config: {
       modules: {
         params: {
-          state() {
-            return {
-              version: 1
-            }
-          },
           namespaced: true,
         },
         tartiflette: {
